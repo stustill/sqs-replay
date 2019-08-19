@@ -3,6 +3,7 @@ name = "sqs-replay"
 description = "A CLI to replay messages from an Amazon SQS dead-letter-queue, to it's (single) source queue."
 homepage = "https://github.com/stustill/sqs-replay"
 repository = "https://github.com/stustill/sqs-replay"
+license = "MIT"
 version = "0.1.0"
 authors = ["stustill <stuart.still@icloud.com>"]
 edition = "2018"
