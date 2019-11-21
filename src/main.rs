@@ -6,7 +6,7 @@ use std::thread::sleep;
 use std::time::Duration;
 
 use clap::{App, Arg};
-use rusoto_core::credential::ProfileProvider;
+use rusoto_core::credential::{ChainProvider, ProfileProvider};
 use rusoto_core::{request::HttpClient, Region};
 use rusoto_sqs::{
     DeleteMessageRequest, GetQueueUrlRequest, ListDeadLetterSourceQueuesRequest,
@@ -43,9 +43,8 @@ fn main() {
             .expect("Must specify a queue name"),
     );
 
-    let credential_provider = create_credential_provider();
     let request_dispatcher = HttpClient::new().expect("failed to create request dispatcher");
-    let sqs = SqsClient::new_with(request_dispatcher, credential_provider, Region::EuWest1);
+    let sqs = SqsClient::new_with(request_dispatcher, ChainProvider::new(), Region::EuWest1);
 
     let dlq_url = lookup_url(&sqs, &dlq_name);
     let source_url = lookup_dlq_source_url(&sqs, &dlq_url);
@@ -91,6 +90,7 @@ fn replay(sqs: &dyn Sqs, from_queue: &str, to_queue: &str, delay: u64) {
                             message_deduplication_id: None,
                             message_group_id: None,
                             queue_url: to_queue.to_string(),
+                            message_system_attributes: None,
                         })
                         .sync()
                         .expect("failed to send");
@@ -134,10 +134,4 @@ fn lookup_dlq_source_url(sqs: &dyn Sqs, dlq_url: &str) -> String {
     } else {
         list_dead_letter_source_queues_result.queue_urls.remove(0)
     }
-}
-
-fn create_credential_provider() -> ProfileProvider {
-    let mut profile_provider = ProfileProvider::new().expect("failed to create profile provider");
-    profile_provider.set_profile("mfa");
-    profile_provider
 }

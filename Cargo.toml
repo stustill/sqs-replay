@@ -4,13 +4,13 @@ description = "A CLI to replay messages from an Amazon SQS dead-letter-queue, to
 homepage = "https://github.com/stustill/sqs-replay"
 repository = "https://github.com/stustill/sqs-replay"
 license = "MIT"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["stustill <stuart.still@icloud.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rusoto_core = "0.40.0"
-rusoto_sqs = "0.40.0"
+rusoto_core = "0.42.0"
+rusoto_sqs = "0.42.0"
 clap = "2.33.0"
