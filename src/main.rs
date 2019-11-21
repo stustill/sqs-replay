@@ -15,7 +15,7 @@ use rusoto_sqs::{
 
 fn main() {
     let matches = App::new("sqs-replay")
-        .version("1.0")
+        .version("0.2.1")
         .about("Replays DLQed messages")
         .author("Stuart Still")
         .arg(
