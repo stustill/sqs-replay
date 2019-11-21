@@ -6,7 +6,7 @@ use std::thread::sleep;
 use std::time::Duration;
 
 use clap::{App, Arg};
-use rusoto_core::credential::{ChainProvider, ProfileProvider};
+use rusoto_core::credential::ChainProvider;
 use rusoto_core::{request::HttpClient, Region};
 use rusoto_sqs::{
     DeleteMessageRequest, GetQueueUrlRequest, ListDeadLetterSourceQueuesRequest,
